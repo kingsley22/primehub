@@ -38,7 +38,7 @@ export default {
 
             this.error = false;
             this.loading = true;
-            axios.get('/api/sia/ticker')
+            axios.get('/api/scprime/ticker')
                 .then((response) => {
                     this.ticker = response.data;
                     this.loading = false;

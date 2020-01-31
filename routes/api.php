@@ -26,15 +26,15 @@ Route::get('/countries', "HostsController@countries");
 Route::get('/continents', "HostsController@continents");
 Route::get('/network', "HostsController@network");
 Route::get('/host/{id}', "HostsController@host");
-Route::get('/sia/ticker', function () {
+Route::get('/scprime/ticker', function () {
     if (Cache::has('cmcticker')) {
         return Cache::get('cmcticker');
     } else {
         $cmc = file_get_contents('https://api.coingecko.com/api/v3/coins/siaprime-coin');
         $cmc = json_decode($cmc, true);
-        Cache::put('cmcticker', $cmc[0], 10);
+        Cache::put('cmcticker', $cmc, 10);
 
-        return $cmc[0];
+        return $cmc;
     }
 });
 
