@@ -30,7 +30,7 @@ Route::get('/sia/ticker', function () {
     if (Cache::has('cmcticker')) {
         return Cache::get('cmcticker');
     } else {
-        $cmc = file_get_contents('https://api.coinmarketcap.com/v1/ticker/siacoin/');
+        $cmc = file_get_contents('https://api.coingecko.com/api/v3/coins/siaprime-coin');
         $cmc = json_decode($cmc, true);
         Cache::put('cmcticker', $cmc[0], 10);
 
@@ -38,18 +38,18 @@ Route::get('/sia/ticker', function () {
     }
 });
 
-Route::get('/sia/release', function () {
-    if (!Cache::has('siarelease')) {
+Route::get('/scprime/release', function () {
+    if (!Cache::has('scprimerelease')) {
         try {
             $client = new \GuzzleHttp\Client();
-            $res = $client->request('GET', 'https://gitlab.com/api/v4/projects/7508674/releases');
+            $res = $client->request('GET', 'https://gitlab.com/api/v4/projects/10135403/releases');
             $response = json_decode($res->getBody(), true);
-            Cache::put('siarelease', $response[0], 24*60);
+            Cache::put('scprimerelease', $response[0], 24*60);
         } catch(Exception $e) {
         }
     }
 
-    return Cache::get('siarelease');
+    return Cache::get('scprimerelease');
 });
 
 Route::get('/settings/recommended', "HostsController@recommendedSettings");

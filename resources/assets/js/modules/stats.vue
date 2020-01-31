@@ -2,7 +2,7 @@
 <ul class="nav navbar-nav navbar-right">
     <li><router-link to="/network" v-tooltip:bottom="'Storage Utilization'"><span v-html="utilization()"></span></router-link></li>
     <li><router-link to="/network" v-tooltip:bottom="'$/TB/month median price'">Avg Price: ${{averagePrice()}}/{{scPrice()}} SC</router-link></li>
-    <li><router-link to="/network" v-tooltip:bottom="'CoinMarketCap Price'">{{ticker.price_btc}} BTC / {{parseFloat(ticker.price_usd).toFixed(4)}}$</router-link></li>
+    <li><router-link to="/network" v-tooltip:bottom="'CoinGecko Price'">{{ticker.market_data.current_price.btc}} BTC / {{parseFloat(ticker.market_data.current_price.usd).toFixed(4)}}$</router-link></li>
 </ul>
 </template>
 
@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         updateTitle(){
-            document.title = '$'+this.averagePrice()+'/TB | '+this.ticker.price_btc;
+            document.title = '$'+this.averagePrice()+'/TB | '+this.ticker.market_data.current_price.btc;
         },
         updateHosts(hosts) {
           this.$store.dispatch('updateHosts', hosts);
@@ -88,7 +88,7 @@ export default {
                         return (Math.round(parseInt(b.storageprice)/1e12*4320));
                     }, 0);
 
-            return (getMedian(result)*this.ticker.price_usd).toFixed(2);
+            return (getMedian(result)*this.ticker.market_data.current_price.usd).toFixed(2);
         },
         scPrice: function(raw){
             if(!this.hosts) return 'loading';
@@ -104,7 +104,7 @@ export default {
                 return item.storageprice;
             }));
 
-            return (result/1e12*4320*this.ticker.price_usd).toFixed(2);
+            return (result/1e12*4320*this.ticker.market_data.current_price.usd).toFixed(2);
         },
         maxPrice: function(raw){
             if(!this.hosts) return 'loading';
@@ -112,7 +112,7 @@ export default {
                 return item.storageprice;
             }));
 
-            return (result/1e12*4320*this.ticker.price_usd).toFixed(2);
+            return (result/1e12*4320*this.ticker.market_data.current_price.usd).toFixed(2);
         },
         utilization: function(){
             if(!this.hosts) return 'loading';

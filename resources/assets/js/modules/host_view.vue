@@ -319,7 +319,7 @@ export default {
                 });
             });
 
-            axios.get('/api/sia/release').then((response) => {
+            axios.get('/api/scprime/release').then((response) => {
                 this.releaseData = response.data;
              });
         },
@@ -394,7 +394,7 @@ export default {
                                 rate = 100-(entry.historicdowntime/entry.historicuptime*100).toFixed(2);
                             }
                             var time = (+new Date())-uptime;
-                            return window.moment(time).toNow(true)+' - '+rate+'%'+'<br>*Uptime/downtime data collected locally by SiaHub wallet and may not provide exact information. <a href="https://siahub.readme.io/docs/host-uptime">Learn more</a>';
+                            return window.moment(time).toNow(true)+' - '+rate+'%'+'<br>*Uptime/downtime data collected locally by ScPrimehub wallet and may not provide exact information.';
                         } else {
                             return 'not enough data collected';
                         }
