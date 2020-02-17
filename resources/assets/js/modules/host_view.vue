@@ -200,7 +200,7 @@ export default {
                     data: this.hostData.history.map((entry) => {
                         return {
                             x: parseInt(moment.utc(entry.created_at).format('x')),
-                            y: ((entry.storageprice/1e12*4320)*((entry.totalstorage-entry.remainingstorage)/1000/1000/1000/1000))/30
+                            y: ((entry.storageprice/1e15*4320)*((entry.totalstorage-entry.remainingstorage)/1000/1000/1000/1000))/30
                         };
                     }),
                     tooltip: { valueSuffix: ' SC/day' },
@@ -285,10 +285,10 @@ export default {
                                     let recommendation = '';
                                     let recommended = recommendedSettings[key];
                                     if(entry.rank > 50 && recommended.median != str) {
-                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e12*4320)) + ' SC</sup>';
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e15*4320)) + ' SC</sup>';
                                     }
 
-                                    return (Math.round(parseInt(str)/1e12*4320)) + ' SC'+recommendation
+                                    return (Math.round(parseInt(str)/1e15*4320)) + ' SC'+recommendation
                                 };
                             }
 
@@ -297,9 +297,9 @@ export default {
                                     let recommendation = '';
                                     let recommended = recommendedSettings[key];
                                     if(entry.rank > 50 && recommended.median != str) {
-                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e12)) + ' SC</sup>';
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e15)) + ' SC</sup>';
                                     }
-                                    return (Math.round(parseInt(str)/1e12)) + ' SC'+recommendation
+                                    return (Math.round(parseInt(str)/1e15)) + ' SC'+recommendation
                                 };
                             }
 
@@ -332,7 +332,7 @@ export default {
         price: function(){
             if(!this.hostData) return 'loading';
 
-            return Math.round(this.hostData.storageprice/1e12*4320)+" SC";
+            return Math.round(this.hostData.storageprice/1e15*4320)+" SC";
         },
         totalstorage: function(){
             if(!this.hostData) return 'loading';

@@ -51,24 +51,24 @@ class Network extends Command
             });
 
             $price = $hosts->reduce(function ($carry, Host $item) {
-                return $carry + (($item->storageprice/1e12*4320)*$item->totalstorage/1000/1000/1000);
+                return $carry + (($item->storageprice/1e15*4320)*$item->totalstorage/1000/1000/1000);
             });
 
             // $prices_ =  [];
             // foreach ($hosts as $item) {
-            //     $prices_ = array_merge($prices_, array_fill(0, round($item->totalstorage/1000/1000/1000), $item->storageprice/1e12*4320));
+            //     $prices_ = array_merge($prices_, array_fill(0, round($item->totalstorage/1000/1000/1000), $item->storageprice/1e15*4320));
             // }
             //
             // $prices__ = collect($prices_);
 
-            echo "raw median: ".($hosts->median('storageprice')/1e12*4320).PHP_EOL;
-            echo "raw avg: ".($hosts->avg('storageprice')/1e12*4320).PHP_EOL;
+            echo "raw median: ".($hosts->median('storageprice')/1e15*4320).PHP_EOL;
+            echo "raw avg: ".($hosts->avg('storageprice')/1e15*4320).PHP_EOL;
             // echo "gb weight median: ".$prices__->median().PHP_EOL;
             echo "gb weight avg: ".($price/($totalstorage/1000/1000/1000)).PHP_EOL;
             echo "storage gb: ".($totalstorage/1000/1000/1000).PHP_EOL;
-            $avg_price = $hosts->median('storageprice')/1e12*4320;
-            $min_price = $hosts->min('storageprice')/1e12*4320;
-            $max_price = $hosts->max('storageprice')/1e12*4320;
+            $avg_price = $hosts->median('storageprice')/1e15*4320;
+            $min_price = $hosts->min('storageprice')/1e15*4320;
+            $max_price = $hosts->max('storageprice')/1e15*4320;
 
             $history = new NetworkHistory();
             $history->all_hosts = Host::count();

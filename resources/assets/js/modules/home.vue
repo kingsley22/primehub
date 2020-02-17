@@ -93,7 +93,7 @@ export default {
         averagePrice: function(raw){
             if(!this.hosts) return 'loading';
             var result = this.hosts.reduce(function(a, b){
-                        return a + Math.round(b.storageprice/1e12*4320);
+                        return a + Math.round(b.storageprice/1e15*4320);
                     }, 0);
 
             return Math.round(result/this.hosts.length);
@@ -104,7 +104,7 @@ export default {
                 return item.storageprice;
             }));
 
-            return Math.round(result/1e12*4320);
+            return Math.round(result/1e15*4320);
         },
         maxPrice: function(raw){
             if(!this.hosts) return 'loading';
@@ -112,7 +112,7 @@ export default {
                 return item.storageprice;
             }));
 
-            return Math.round(result/1e12*4320);
+            return Math.round(result/1e15*4320);
         },
         utilization: function(){
             if(!this.hosts) return 'loading';
@@ -162,9 +162,9 @@ export default {
                     return entry.netaddress;
                 },
                 price: function(str, entry, raw){
-                    if(raw) return Math.round(entry.storageprice/1e12*4320);
+                    if(raw) return Math.round(entry.storageprice/1e15*4320);
 
-                    return Math.round(entry.storageprice/1e12*4320)+" SC";
+                    return Math.round(entry.storageprice/1e15*4320)+" SC";
                 },
                 totalstorage: function(str, entry, raw){
                     if(raw) return parseInt(entry.totalstorage);

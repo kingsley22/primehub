@@ -83,7 +83,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <!-- Scripts -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKA8pOjteQEx2hdL9WiQY3U83m9tUzrZs&libraries=visualization">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCY1uO8mfxeXJKSYRTJPiL_UD_TcgWhiI&libraries=visualization">
     </script>
     <script async defer src="/js/markerclusterer.js"></script>
 

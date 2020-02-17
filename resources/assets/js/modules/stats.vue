@@ -85,7 +85,7 @@ export default {
         averagePrice: function(raw){
             if(!this.hosts) return 'loading';
             var result = this.hosts.map(function(b){
-                        return (Math.round(parseInt(b.storageprice)/1e12*4320));
+                        return (Math.round(parseInt(b.storageprice)/1e15*4320));
                     }, 0);
 
             return (getMedian(result)*this.ticker.market_data.current_price.usd).toFixed(2);
@@ -93,7 +93,7 @@ export default {
         scPrice: function(raw){
             if(!this.hosts) return 'loading';
             var result = this.hosts.map(function(b){
-                        return (Math.round(parseInt(b.storageprice)/1e12*4320));
+                        return (Math.round(parseInt(b.storageprice)/1e15*4320));
                     }, 0);
 
             return getMedian(result);
@@ -104,7 +104,7 @@ export default {
                 return item.storageprice;
             }));
 
-            return (result/1e12*4320*this.ticker.market_data.current_price.usd).toFixed(2);
+            return (result/1e15*4320*this.ticker.market_data.current_price.usd).toFixed(2);
         },
         maxPrice: function(raw){
             if(!this.hosts) return 'loading';
@@ -112,7 +112,7 @@ export default {
                 return item.storageprice;
             }));
 
-            return (result/1e12*4320*this.ticker.market_data.current_price.usd).toFixed(2);
+            return (result/1e15*4320*this.ticker.market_data.current_price.usd).toFixed(2);
         },
         utilization: function(){
             if(!this.hosts) return 'loading';

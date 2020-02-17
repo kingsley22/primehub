@@ -32,6 +32,8 @@ Route::get('/scprime/ticker', function () {
     } else {
         $cmc = file_get_contents('https://api.coingecko.com/api/v3/coins/siaprime-coin');
         $cmc = json_decode($cmc, true);
+        $cmc['market_data']['current_price']['btc'] = number_format( $cmc['market_data']['current_price']['btc'], 10 );
+
         Cache::put('cmcticker', $cmc, 10);
 
         return $cmc;
