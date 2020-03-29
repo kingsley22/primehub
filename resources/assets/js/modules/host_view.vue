@@ -144,7 +144,7 @@ export default {
                     min: 0
                 }, {
                     title: {text: 'Earnings'},
-                    labels: { format: '{value:.0f} SC/day' },
+                    labels: { format: '{value:.0f} SCP/day' },
                     min: 0,
                     opposite: false
                 }, {
@@ -203,11 +203,11 @@ export default {
                             y: ((entry.storageprice/1e15*4320)*((entry.totalstorage-entry.remainingstorage)/1000/1000/1000/1000))/30
                         };
                     }),
-                    tooltip: { valueSuffix: ' SC/day' },
+                    tooltip: { valueSuffix: ' SCP/day' },
                     yAxis: 1,
                     color: '#00ff00',
                     fillColor: 'transparent',
-                    tooltip: { pointFormat: '<span style="color:green">{series.name}: <b>{point.y:.2f} SC/day</b></span><br/>' },
+                    tooltip: { pointFormat: '<span style="color:green">{series.name}: <b>{point.y:.2f} SCP/day</b></span><br/>' },
                 }]
             };
             console.log(Highcharts.getOptions().colors, options);
@@ -267,10 +267,10 @@ export default {
                                     let recommendation = '';
                                     let recommended = recommendedSettings[key];
                                     if(entry.rank > 50) {
-                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.min)/1e24)) + ' SC</sup>';
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.min)/1e24)) + ' SCP</sup>';
                                     }
 
-                                    return (Math.round(parseInt(str)/1e24)) + ' SC'+recommendation;
+                                    return (Math.round(parseInt(str)/1e24)) + ' SCP'+recommendation;
                                 };
                             }
 
@@ -285,10 +285,10 @@ export default {
                                     let recommendation = '';
                                     let recommended = recommendedSettings[key];
                                     if(entry.rank > 50 && recommended.median != str) {
-                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e15*4320)) + ' SC</sup>';
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e15*4320)) + ' SCP</sup>';
                                     }
 
-                                    return (Math.round(parseInt(str)/1e15*4320)) + ' SC'+recommendation
+                                    return (Math.round(parseInt(str)/1e15*4320)) + ' SCP'+recommendation
                                 };
                             }
 
@@ -297,9 +297,9 @@ export default {
                                     let recommendation = '';
                                     let recommended = recommendedSettings[key];
                                     if(entry.rank > 50 && recommended.median != str) {
-                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e15)) + ' SC</sup>';
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e15)) + ' SCP</sup>';
                                     }
-                                    return (Math.round(parseInt(str)/1e15)) + ' SC'+recommendation
+                                    return (Math.round(parseInt(str)/1e15)) + ' SCP'+recommendation
                                 };
                             }
 
@@ -332,7 +332,7 @@ export default {
         price: function(){
             if(!this.hostData) return 'loading';
 
-            return Math.round(this.hostData.storageprice/1e15*4320)+" SC";
+            return Math.round(this.hostData.storageprice/1e15*4320)+" SCP";
         },
         totalstorage: function(){
             if(!this.hostData) return 'loading';

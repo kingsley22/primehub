@@ -1,7 +1,7 @@
 <template>
 <ul class="nav navbar-nav navbar-right">
     <li><router-link to="/network" v-tooltip:bottom="'Storage Utilization'"><span v-html="utilization()"></span></router-link></li>
-    <li><router-link to="/network" v-tooltip:bottom="'$/TB/month median price'">Avg Price: ${{averagePrice()}}/{{scPrice()}} SC</router-link></li>
+    <li><router-link to="/network" v-tooltip:bottom="'$/TB/month median price'">Avg Price: ${{averagePrice()}}/{{scPrice()}} SCP</router-link></li>
     <li><router-link to="/network" v-tooltip:bottom="'CoinGecko Price'">{{ticker.market_data.current_price.btc}} BTC / {{parseFloat(ticker.market_data.current_price.usd).toFixed(4)}}$</router-link></li>
 </ul>
 </template>

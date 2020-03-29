@@ -44,9 +44,9 @@
                                 </tr>
                                 <tr>
                                     <td>Avg storage price</td>
-                                    <td><numberChangeSnippet :value="priceChange24hr" suffix="SC"></numberChangeSnippet></td>
-                                    <td><numberChangeSnippet :value="priceChange7d" suffix="SC"></numberChangeSnippet></td>
-                                    <td><numberChangeSnippet :value="priceChange30d" suffix="SC"></numberChangeSnippet></td>
+                                    <td><numberChangeSnippet :value="priceChange24hr" suffix="SCP"></numberChangeSnippet></td>
+                                    <td><numberChangeSnippet :value="priceChange7d" suffix="SCP"></numberChangeSnippet></td>
+                                    <td><numberChangeSnippet :value="priceChange30d" suffix="SCP"></numberChangeSnippet></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -643,7 +643,7 @@ export default {
                     ]
                 },
                 tooltip: {
-                    pointFormat: '<span style="color:#00cba0">{series.name}: <b>{point.y:.2f} SC/TB/Mo</b></span><br/>'
+                    pointFormat: '<span style="color:#00cba0">{series.name}: <b>{point.y:.2f} SCP/TB/Mo</b></span><br/>'
                 },
             }];
 

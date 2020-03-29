@@ -44,24 +44,6 @@ class Hosts extends Command
 
 
         $hosts = Host::where('active', 1)->get();
-        $hosts_arr = $hosts->toArray();
-        usort($hosts_arr, function ($a, $b) {
-            $host_score = json_decode($a['score'], true);
-            $a = (!empty($host_score['score'])) ? $host_score['score']:0;
-
-            $host_score = json_decode($b['score'], true);
-            $b = (!empty($host_score['score'])) ? $host_score['score']:0;
-
-            return Decimal::fromFloat($b)->comp(Decimal::fromFloat($a));
-        });
-
-        $i = 1;
-        foreach ($hosts_arr as $key => $host) {
-            $host_ = Host::find($host['id']);
-            $host_->rank = $i;
-            $host_->save();
-            $i++;
-        }
 
         try {
             $client = new \GuzzleHttp\Client();
@@ -87,18 +69,51 @@ class Hosts extends Command
 
                     if(!empty($host['scorebreakdown'])) {
                         $score = 1;
+						$step = 1;
                         foreach ($host['scorebreakdown'] as $key => $val) {
+							/*	Fix exponents	*/
+							if( ( $epos = strpos( $val, "E" ) ) > 0 ) {
+								/*	determine operator	*/
+								$operator = substr( $val, $epos+1, 1);
+								$exp = substr( $val, $epos+2 );
+								//echo 'Operator: ', $operator, '. Exponent: ', $exp;
+								if( $operator == '-' )
+									$val = $val * ( 10 ** $exp );
+								elseif( $operator == '+' )
+									$val = $val / ( 10 ** $exp );
+							}
+							$host['scorebreakdown'][$key] = $val;
+							
                             if ($key == "score" || $key == "conversionrate") {
                                 continue;
                             }
 
                             $score = $score*$val;
                         }
+						
                         $host['scorebreakdown']['score'] = sprintf('%.30f', $score);
                         $db_host->score = json_encode($host['scorebreakdown']);
                     } else {
                         $db_host->score = json_encode([]);
                     }
+					
+					//foreach( $db_host->score as $key => $val ) {
+					//	if( ( $epos = strpos( $val, "E" ) ) > 0 ) {
+					//		/*	determine operator	*/
+					//		$operator = substr( $val, $epos+1, 1);
+					//		$exp = substr( $val, $epos+2 );
+					//		//echo 'Operator: ', $operator, '. Exponent: ', $exp;
+					//		if( $operator == '-' )
+					//			$val = $val * ( 10 ** $exp );
+					//		elseif( $operator == '+' )
+					//			$val = $val / ( 10 ** $exp );
+					//	}
+					//	$db_host->score->$key = $val;
+					//}
+					
+					if( $host['netaddress'] == 'prime.kingsley-muir.com:4282' ) {
+						print_r( $db_host->score );
+					}
 
 
                     $last_scan = end($host['scanhistory']);
@@ -131,6 +146,25 @@ class Hosts extends Command
 
                 Cache::put('wallet_online', true, 10);
             }
+			
+			$hosts_arr = $hosts->toArray();
+			usort($hosts_arr, function ($a, $b) {
+				$host_score = json_decode($a['score'], true);
+				$a = (!empty($host_score['score'])) ? (float)$host_score['score']:0;
+
+				$host_score = json_decode($b['score'], true);
+				$b = (!empty($host_score['score'])) ? (float)$host_score['score']:0;
+
+				return Decimal::fromFloat($b)->comp(Decimal::fromFloat($a));
+			});
+
+			$i = 1;
+			foreach ($hosts_arr as $key => $host) {
+				$host_ = Host::find($host['id']);
+				$host_->rank = $i;
+				$host_->save();
+				$i++;
+			}
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             Cache::put('wallet_online', false, 10);
             echo $e->getMessage();
